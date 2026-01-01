@@ -934,7 +934,7 @@ for test_str in test_strings:
           </Button>
 
           <div className="text-center space-y-4">
-            <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <div className="p-3 rounded-xl bg-primary/10 border border-primary/20">
                 <Code className="w-8 h-8 text-primary" />
               </div>
@@ -1005,7 +1005,7 @@ for test_str in test_strings:
                     </Button>
                   ))}
                 </div>
-                <div className="flex gap-2 items-center">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <span className="text-sm font-medium text-muted-foreground">
                     Language:
                   </span>
