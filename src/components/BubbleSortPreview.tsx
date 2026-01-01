@@ -1,28 +1,41 @@
 import { useState } from "react";
 import { AlgorithmVisualizer } from "@/components/AlgorithmVisualizer";
 import { generateBubbleSortSteps } from "@/algorithms/bubbleSort";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Lock } from "lucide-react";
 
 const BubbleSortPreview = () => {
   const navigate = useNavigate();
-  const [currentData] = useState(() => 
+  const [currentData] = useState(() =>
     Array.from({ length: 6 }, () => Math.floor(Math.random() * 100) + 1)
   );
 
   const steps = generateBubbleSortSteps(currentData);
 
-  const renderSortElement = (value: number, index: number, isHighlighted: boolean, isComparing: boolean) => (
+  const renderSortElement = (
+    value: number,
+    index: number,
+    isHighlighted: boolean,
+    isComparing: boolean
+  ) => (
     <div className="flex flex-col items-center gap-2">
-      <div 
+      <div
         className="flex items-end justify-center p-2 min-w-[50px] text-white font-bold text-sm rounded-t transition-all duration-300"
-        style={{ 
+        style={{
           height: `${(value / 100) * 150 + 40}px`,
-          backgroundColor: isComparing ? 'hsl(var(--destructive))' : 
-                          isHighlighted ? 'hsl(var(--primary))' : 
-                          'hsl(var(--muted-foreground))'
+          backgroundColor: isComparing
+            ? "hsl(var(--destructive))"
+            : isHighlighted
+            ? "hsl(var(--primary))"
+            : "hsl(var(--muted-foreground))",
         }}
       >
         {value}
@@ -35,14 +48,18 @@ const BubbleSortPreview = () => {
     <div className="space-y-6">
       <Card className="glass-card bg-accent/5 border-accent/20">
         <CardHeader>
-          <CardTitle className="font-space text-2xl">Preview: Bubble Sort Algorithm</CardTitle>
+          <CardTitle className="font-space text-2xl">
+            Preview: Bubble Sort Algorithm
+          </CardTitle>
           <CardDescription>
-            Watch how Bubble Sort works! Login to access all algorithms, visualizations, and practice challenges.
+            Watch how Bubble Sort works! Login to access all algorithms,
+            visualizations, and practice challenges.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground mb-4">
-            Bubble Sort repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.
+            Bubble Sort repeatedly steps through the list, compares adjacent
+            elements and swaps them if they are in the wrong order.
           </p>
         </CardContent>
       </Card>
@@ -66,21 +83,23 @@ const BubbleSortPreview = () => {
               Want to explore more?
             </h3>
             <p className="text-muted-foreground">
-              Login to access Quick Sort, Searching Algorithms, Stacks, Queues, and interactive coding challenges!
+              Login to access Quick Sort, Searching Algorithms, Stacks, Queues,
+              and interactive coding challenges!
             </p>
-            <div className="flex gap-4 justify-center">
-              <Button 
-                size="lg" 
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+              <Button
+                size="lg"
                 onClick={() => navigate("/auth")}
-                className="transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-glow"
+                className="w-full sm:w-auto transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-glow"
               >
                 Login to Continue
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
+
+              <Button
+                size="lg"
+                variant="outline"
                 onClick={() => navigate("/auth")}
-                className="transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md"
+                className="w-full sm:w-auto transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md"
               >
                 Sign Up Free
               </Button>
