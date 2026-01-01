@@ -111,7 +111,7 @@ const Index = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-[100svh] md:min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
           <p className="text-muted-foreground">Loading...</p>
@@ -123,7 +123,7 @@ const Index = () => {
   // Show preview for non-authenticated users
   if (!user) {
     return (
-      <div className="min-h-screen p-6 lg:p-8">
+      <div className="min-h-[100svh] md:min-h-screen p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header with Login Button */}
           <div className="flex justify-between items-center mb-8">
@@ -157,7 +157,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen p-6 lg:p-8">
+    <div className="min-h-[100svh] md:min-h-screen p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header with Logout and Support Buttons */}
         <div className="flex justify-end gap-2 mb-4">
