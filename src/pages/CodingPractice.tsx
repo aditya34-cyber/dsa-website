@@ -3,12 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Code, BookOpen, Lightbulb, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import CodeEditor from "@/components/CodeEditor";
 
 const CodingPractice = () => {
   const navigate = useNavigate();
-  const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
+  const [selectedChallenge, setSelectedChallenge] = useState<string | null>(
+    null
+  );
 
   const challenges = [
     // Data Structures - Beginner
@@ -16,7 +24,8 @@ const CodingPractice = () => {
       id: "stack-implementation",
       title: "Implement a Stack",
       difficulty: "Beginner",
-      description: "Create a stack data structure with push, pop, peek, and isEmpty methods.",
+      description:
+        "Create a stack data structure with push, pop, peek, and isEmpty methods.",
       starter: `#include <iostream>
 #include <vector>
 #include <stdexcept>
@@ -64,13 +73,14 @@ int main() {
     return 0;
 }`,
       category: "data-structures",
-      language: "cpp"
+      language: "cpp",
     },
     {
       id: "stack-python",
       title: "Stack Implementation (Python)",
       difficulty: "Beginner",
-      description: "Create a stack data structure in Python with push, pop, peek, and is_empty methods.",
+      description:
+        "Create a stack data structure in Python with push, pop, peek, and is_empty methods.",
       starter: `# Implement a Stack class in Python
 class Stack:
     def __init__(self):
@@ -105,13 +115,14 @@ print(stack.peek())  # Should output: 2
 print(stack.pop())   # Should output: 2
 print(stack.size())  # Should output: 1`,
       category: "data-structures",
-      language: "python"
+      language: "python",
     },
     {
       id: "queue-implementation",
       title: "Implement a Queue",
-      difficulty: "Beginner", 
-      description: "Create a queue data structure with enqueue, dequeue, front, and isEmpty methods.",
+      difficulty: "Beginner",
+      description:
+        "Create a queue data structure with enqueue, dequeue, front, and isEmpty methods.",
       starter: `#include <iostream>
 #include <queue>
 #include <stdexcept>
@@ -172,13 +183,14 @@ int main() {
     return 0;
 }`,
       category: "data-structures",
-      language: "cpp"
+      language: "cpp",
     },
     {
       id: "linked-list",
-      title: "Linked List Implementation", 
+      title: "Linked List Implementation",
       difficulty: "Intermediate",
-      description: "Create a singly linked list with insert, delete, find, and display methods.",
+      description:
+        "Create a singly linked list with insert, delete, find, and display methods.",
       starter: `#include <iostream>
 using namespace std;
 
@@ -246,7 +258,7 @@ int main() {
     return 0;
 }`,
       category: "data-structures",
-      language: "cpp"
+      language: "cpp",
     },
 
     // Searching Algorithms
@@ -254,7 +266,8 @@ int main() {
       id: "binary-search",
       title: "Binary Search Implementation",
       difficulty: "Intermediate",
-      description: "Implement binary search algorithm to find an element in a sorted array.",
+      description:
+        "Implement binary search algorithm to find an element in a sorted array.",
       starter: `#include <iostream>
 #include <vector>
 using namespace std;
@@ -275,13 +288,14 @@ int main() {
     return 0;
 }`,
       category: "searching",
-      language: "cpp"
+      language: "cpp",
     },
     {
       id: "linear-search",
       title: "Linear Search Implementation",
       difficulty: "Beginner",
-      description: "Implement linear search to find an element in an unsorted array.",
+      description:
+        "Implement linear search to find an element in an unsorted array.",
       starter: `def linear_search(arr, target):
     """
     Implement linear search to find target in array
@@ -296,7 +310,7 @@ print(f"Searching for 7: {linear_search(array, 7)}")  # Should output: 2
 print(f"Searching for 5: {linear_search(array, 5)}")  # Should output: -1
 print(f"Searching for 1: {linear_search(array, 1)}")  # Should output: 3`,
       category: "searching",
-      language: "python"
+      language: "python",
     },
 
     // Sorting Algorithms
@@ -304,7 +318,8 @@ print(f"Searching for 1: {linear_search(array, 1)}")  # Should output: 3`,
       id: "bubble-sort",
       title: "Bubble Sort Implementation",
       difficulty: "Beginner",
-      description: "Implement the bubble sort algorithm to sort an array in ascending order.",
+      description:
+        "Implement the bubble sort algorithm to sort an array in ascending order.",
       starter: `#include <iostream>
 #include <vector>
 using namespace std;
@@ -338,13 +353,14 @@ int main() {
     return 0;
 }`,
       category: "sorting",
-      language: "cpp"
+      language: "cpp",
     },
     {
       id: "selection-sort",
       title: "Selection Sort Implementation",
       difficulty: "Beginner",
-      description: "Implement selection sort algorithm to sort an array by selecting minimum elements.",
+      description:
+        "Implement selection sort algorithm to sort an array by selecting minimum elements.",
       starter: `def selection_sort(arr):
     """
     Implement selection sort
@@ -361,13 +377,14 @@ print("Original:", unsorted_array)
 sorted_array = selection_sort(unsorted_array.copy())
 print("Sorted:", sorted_array)`,
       category: "sorting",
-      language: "python"
+      language: "python",
     },
     {
       id: "insertion-sort",
       title: "Insertion Sort Implementation",
       difficulty: "Beginner",
-      description: "Implement insertion sort algorithm that builds sorted array one element at a time.",
+      description:
+        "Implement insertion sort algorithm that builds sorted array one element at a time.",
       starter: `#include <iostream>
 #include <vector>
 using namespace std;
@@ -400,7 +417,7 @@ int main() {
     return 0;
 }`,
       category: "sorting",
-      language: "cpp"
+      language: "cpp",
     },
     {
       id: "merge-sort",
@@ -432,7 +449,7 @@ print("Original:", unsorted_array)
 sorted_array = merge_sort(unsorted_array)
 print("Sorted:", sorted_array)`,
       category: "sorting",
-      language: "python"
+      language: "python",
     },
     {
       id: "quick-sort",
@@ -477,7 +494,7 @@ int main() {
     return 0;
 }`,
       category: "sorting",
-      language: "cpp"
+      language: "cpp",
     },
 
     // Tree Algorithms
@@ -551,13 +568,14 @@ int main() {
     return 0;
 }`,
       category: "trees",
-      language: "cpp"
+      language: "cpp",
     },
     {
       id: "bst-implementation",
       title: "Binary Search Tree",
       difficulty: "Advanced",
-      description: "Implement a binary search tree with insert, search, and delete operations.",
+      description:
+        "Implement a binary search tree with insert, search, and delete operations.",
       starter: `class TreeNode:
     def __init__(self, data):
         self.data = data
@@ -610,7 +628,7 @@ bst.insert(70)
 print("Found 30:", bst.search(30))
 print("Inorder:", bst.inorder_traversal())`,
       category: "trees",
-      language: "python"
+      language: "python",
     },
 
     // Graph Algorithms
@@ -618,7 +636,8 @@ print("Inorder:", bst.inorder_traversal())`,
       id: "graph-representation",
       title: "Graph Representation",
       difficulty: "Intermediate",
-      description: "Implement graph using adjacency list representation with basic operations.",
+      description:
+        "Implement graph using adjacency list representation with basic operations.",
       starter: `#include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -674,13 +693,14 @@ int main() {
     return 0;
 }`,
       category: "graphs",
-      language: "cpp"
+      language: "cpp",
     },
     {
       id: "dfs-traversal",
       title: "Depth-First Search",
       difficulty: "Advanced",
-      description: "Implement DFS traversal for a graph using recursion and iterative approaches.",
+      description:
+        "Implement DFS traversal for a graph using recursion and iterative approaches.",
       starter: `from collections import defaultdict
 
 class Graph:
@@ -718,7 +738,7 @@ graph.add_edge("B", "D")
 print("DFS Recursive:", graph.dfs_recursive("A"))
 print("DFS Iterative:", graph.dfs_iterative("A"))`,
       category: "graphs",
-      language: "python"
+      language: "python",
     },
 
     // Dynamic Programming
@@ -726,7 +746,8 @@ print("DFS Iterative:", graph.dfs_iterative("A"))`,
       id: "fibonacci-dp",
       title: "Fibonacci with Dynamic Programming",
       difficulty: "Intermediate",
-      description: "Implement Fibonacci sequence using memoization and tabulation approaches.",
+      description:
+        "Implement Fibonacci sequence using memoization and tabulation approaches.",
       starter: `#include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -762,7 +783,7 @@ int main() {
     return 0;
 }`,
       category: "dynamic-programming",
-      language: "cpp"
+      language: "cpp",
     },
 
     // String Algorithms
@@ -770,7 +791,8 @@ int main() {
       id: "string-palindrome",
       title: "Palindrome Checker",
       difficulty: "Beginner",
-      description: "Check if a string is a palindrome using different approaches.",
+      description:
+        "Check if a string is a palindrome using different approaches.",
       starter: `def is_palindrome_simple(s):
     """Simple reverse and compare approach"""
     # Your code here
@@ -793,63 +815,107 @@ test_strings = ["racecar", "hello", "madam", "level"]
 for test_str in test_strings:
     print(f"{test_str}: {is_palindrome_simple(test_str)}")`,
       category: "strings",
-      language: "python"
-    }
+      language: "python",
+    },
   ];
 
   const tutorials = [
     {
       title: "Data Structures Fundamentals",
       description: "Master the building blocks of computer science",
-      topics: ["Arrays & Lists", "Stacks & Queues", "Trees & Graphs", "Hash Tables"],
-      icon: BookOpen
+      topics: [
+        "Arrays & Lists",
+        "Stacks & Queues",
+        "Trees & Graphs",
+        "Hash Tables",
+      ],
+      icon: BookOpen,
     },
     {
-      title: "Algorithm Design Patterns", 
+      title: "Algorithm Design Patterns",
       description: "Learn common algorithmic approaches and when to use them",
-      topics: ["Divide & Conquer", "Dynamic Programming", "Greedy Algorithms", "Backtracking"],
-      icon: Target
+      topics: [
+        "Divide & Conquer",
+        "Dynamic Programming",
+        "Greedy Algorithms",
+        "Backtracking",
+      ],
+      icon: Target,
     },
     {
       title: "Complexity Analysis",
       description: "Master Big O notation and performance optimization",
-      topics: ["Time Complexity", "Space Complexity", "Best/Average/Worst Cases", "Optimization Techniques"],
-      icon: Lightbulb
+      topics: [
+        "Time Complexity",
+        "Space Complexity",
+        "Best/Average/Worst Cases",
+        "Optimization Techniques",
+      ],
+      icon: Lightbulb,
     },
     {
       title: "Advanced Topics",
       description: "Explore advanced algorithms and data structures",
-      topics: ["Graph Algorithms", "Tree Traversals", "Sorting & Searching", "String Algorithms"],
-      icon: Code
-    }
+      topics: [
+        "Graph Algorithms",
+        "Tree Traversals",
+        "Sorting & Searching",
+        "String Algorithms",
+      ],
+      icon: Code,
+    },
   ];
 
   const categories = [
     { name: "All", count: challenges.length },
-    { name: "data-structures", count: challenges.filter(c => c.category === "data-structures").length },
-    { name: "sorting", count: challenges.filter(c => c.category === "sorting").length },
-    { name: "searching", count: challenges.filter(c => c.category === "searching").length },
-    { name: "trees", count: challenges.filter(c => c.category === "trees").length },
-    { name: "graphs", count: challenges.filter(c => c.category === "graphs").length },
-    { name: "dynamic-programming", count: challenges.filter(c => c.category === "dynamic-programming").length },
-    { name: "strings", count: challenges.filter(c => c.category === "strings").length }
+    {
+      name: "data-structures",
+      count: challenges.filter((c) => c.category === "data-structures").length,
+    },
+    {
+      name: "sorting",
+      count: challenges.filter((c) => c.category === "sorting").length,
+    },
+    {
+      name: "searching",
+      count: challenges.filter((c) => c.category === "searching").length,
+    },
+    {
+      name: "trees",
+      count: challenges.filter((c) => c.category === "trees").length,
+    },
+    {
+      name: "graphs",
+      count: challenges.filter((c) => c.category === "graphs").length,
+    },
+    {
+      name: "dynamic-programming",
+      count: challenges.filter((c) => c.category === "dynamic-programming")
+        .length,
+    },
+    {
+      name: "strings",
+      count: challenges.filter((c) => c.category === "strings").length,
+    },
   ];
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLanguage, setSelectedLanguage] = useState("All");
 
-  const filteredChallenges = challenges.filter(challenge => {
-    const categoryMatch = selectedCategory === "All" || challenge.category === selectedCategory;
-    const languageMatch = selectedLanguage === "All" || challenge.language === selectedLanguage;
+  const filteredChallenges = challenges.filter((challenge) => {
+    const categoryMatch =
+      selectedCategory === "All" || challenge.category === selectedCategory;
+    const languageMatch =
+      selectedLanguage === "All" || challenge.language === selectedLanguage;
     return categoryMatch && languageMatch;
   });
 
-  const loadChallenge = (challenge: typeof challenges[0]) => {
+  const loadChallenge = (challenge: (typeof challenges)[0]) => {
     setSelectedChallenge(challenge.id);
   };
 
   const getSelectedChallengeCode = () => {
-    const challenge = challenges.find(c => c.id === selectedChallenge);
+    const challenge = challenges.find((c) => c.id === selectedChallenge);
     return challenge?.starter || "";
   };
 
@@ -858,15 +924,15 @@ for test_str in test_strings:
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => navigate("/")}
             className="mb-4 hover:bg-accent/10"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
           </Button>
-          
+
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="p-3 rounded-xl bg-primary/10 border border-primary/20">
@@ -877,21 +943,34 @@ for test_str in test_strings:
               </h1>
             </div>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Practice implementing data structures and algorithms with our interactive code editor. 
-              Save your projects and track your progress.
+              Practice implementing data structures and algorithms with our
+              interactive code editor. Save your projects and track your
+              progress.
             </p>
           </div>
         </div>
 
         <Tabs defaultValue="editor" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="editor">Code Editor</TabsTrigger>
-            <TabsTrigger value="challenges">Practice Challenges</TabsTrigger>
-            <TabsTrigger value="tutorials">Learning Resources</TabsTrigger>
+          <TabsList className="w-full flex flex-col items-stretch gap-2 sm:grid sm:grid-cols-3 sm:gap-0">
+            <TabsTrigger value="editor" className="w-full text-sm sm:text-base">
+              Code Editor
+            </TabsTrigger>
+            <TabsTrigger
+              value="challenges"
+              className="w-full text-sm sm:text-base"
+            >
+              Practice Challenges
+            </TabsTrigger>
+            <TabsTrigger
+              value="tutorials"
+              className="w-full text-sm sm:text-base"
+            >
+              Learning Resources
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="editor" className="space-y-6">
-            <CodeEditor 
+            <CodeEditor
               initialCode={getSelectedChallengeCode()}
               onCodeChange={(code) => {
                 // Handle code changes if needed
@@ -904,21 +983,32 @@ for test_str in test_strings:
             <div className="glass-card p-4 rounded-xl">
               <div className="flex flex-wrap gap-4 items-center justify-between">
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-sm font-medium text-muted-foreground">Categories:</span>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Categories:
+                  </span>
                   {categories.map((category) => (
                     <Button
                       key={category.name}
-                      variant={selectedCategory === category.name ? "default" : "outline"}
+                      variant={
+                        selectedCategory === category.name
+                          ? "default"
+                          : "outline"
+                      }
                       size="sm"
                       onClick={() => setSelectedCategory(category.name)}
                       className="h-8"
                     >
-                      {category.name === "All" ? "All" : category.name.replace("-", " ")} ({category.count})
+                      {category.name === "All"
+                        ? "All"
+                        : category.name.replace("-", " ")}{" "}
+                      ({category.count})
                     </Button>
                   ))}
                 </div>
                 <div className="flex gap-2 items-center">
-                  <span className="text-sm font-medium text-muted-foreground">Language:</span>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Language:
+                  </span>
                   <Button
                     variant={selectedLanguage === "All" ? "default" : "outline"}
                     size="sm"
@@ -941,14 +1031,18 @@ for test_str in test_strings:
                     C
                   </Button>
                   <Button
-                    variant={selectedLanguage === "python" ? "default" : "outline"}
+                    variant={
+                      selectedLanguage === "python" ? "default" : "outline"
+                    }
                     size="sm"
                     onClick={() => setSelectedLanguage("python")}
                   >
                     Python
                   </Button>
                   <Button
-                    variant={selectedLanguage === "javascript" ? "default" : "outline"}
+                    variant={
+                      selectedLanguage === "javascript" ? "default" : "outline"
+                    }
                     size="sm"
                     onClick={() => setSelectedLanguage("javascript")}
                   >
@@ -961,20 +1055,29 @@ for test_str in test_strings:
             {/* Challenge Cards */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {filteredChallenges.map((challenge) => (
-                <Card key={challenge.id} className="glass-card border-border/20 hover:border-primary/30 transition-colors cursor-pointer">
+                <Card
+                  key={challenge.id}
+                  className="glass-card border-border/20 hover:border-primary/30 transition-colors cursor-pointer"
+                >
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
-                        <CardTitle className="text-lg leading-tight">{challenge.title}</CardTitle>
-                        <CardDescription className="mt-2 text-sm">{challenge.description}</CardDescription>
+                        <CardTitle className="text-lg leading-tight">
+                          {challenge.title}
+                        </CardTitle>
+                        <CardDescription className="mt-2 text-sm">
+                          {challenge.description}
+                        </CardDescription>
                       </div>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ml-2 flex-shrink-0 ${
-                        challenge.difficulty === 'Beginner' 
-                          ? 'bg-success/20 text-success' 
-                          : challenge.difficulty === 'Intermediate'
-                          ? 'bg-warning/20 text-warning'
-                          : 'bg-destructive/20 text-destructive'
-                      }`}>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium ml-2 flex-shrink-0 ${
+                          challenge.difficulty === "Beginner"
+                            ? "bg-success/20 text-success"
+                            : challenge.difficulty === "Intermediate"
+                            ? "bg-warning/20 text-warning"
+                            : "bg-destructive/20 text-destructive"
+                        }`}
+                      >
                         {challenge.difficulty}
                       </span>
                     </div>
@@ -989,11 +1092,13 @@ for test_str in test_strings:
                           {challenge.language}
                         </span>
                       </div>
-                      <Button 
+                      <Button
                         onClick={() => {
                           loadChallenge(challenge);
                           // Switch to editor tab programmatically
-                          const editorTab = document.querySelector('[value="editor"]') as HTMLElement;
+                          const editorTab = document.querySelector(
+                            '[value="editor"]'
+                          ) as HTMLElement;
                           editorTab?.click();
                         }}
                         size="sm"
@@ -1009,7 +1114,9 @@ for test_str in test_strings:
 
             {filteredChallenges.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-muted-foreground">No challenges found for the selected filters.</p>
+                <p className="text-muted-foreground">
+                  No challenges found for the selected filters.
+                </p>
               </div>
             )}
           </TabsContent>
@@ -1023,7 +1130,9 @@ for test_str in test_strings:
                       <div className="p-2 rounded-lg bg-primary/10">
                         <tutorial.icon className="w-5 h-5 text-primary" />
                       </div>
-                      <CardTitle className="text-lg">{tutorial.title}</CardTitle>
+                      <CardTitle className="text-lg">
+                        {tutorial.title}
+                      </CardTitle>
                     </div>
                     <CardDescription>{tutorial.description}</CardDescription>
                   </CardHeader>
@@ -1032,7 +1141,10 @@ for test_str in test_strings:
                       <h4 className="font-medium text-sm">Topics covered:</h4>
                       <ul className="space-y-1">
                         {tutorial.topics.map((topic, topicIndex) => (
-                          <li key={topicIndex} className="text-sm text-muted-foreground flex items-center gap-2">
+                          <li
+                            key={topicIndex}
+                            className="text-sm text-muted-foreground flex items-center gap-2"
+                          >
                             <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
                             {topic}
                           </li>
@@ -1046,10 +1158,14 @@ for test_str in test_strings:
 
             {/* Quick Reference */}
             <div className="glass-card p-6 rounded-xl">
-              <h3 className="font-space font-semibold text-xl mb-4">Algorithm Complexity Quick Reference</h3>
+              <h3 className="font-space font-semibold text-xl mb-4">
+                Algorithm Complexity Quick Reference
+              </h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
-                  <h4 className="font-medium mb-2 text-success">Common Time Complexities</h4>
+                  <h4 className="font-medium mb-2 text-success">
+                    Common Time Complexities
+                  </h4>
                   <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>O(1) - Constant time</li>
                     <li>O(log n) - Logarithmic time</li>
@@ -1059,9 +1175,11 @@ for test_str in test_strings:
                     <li>O(2ⁿ) - Exponential time</li>
                   </ul>
                 </div>
-                
+
                 <div>
-                  <h4 className="font-medium mb-2 text-warning">Sorting Algorithms</h4>
+                  <h4 className="font-medium mb-2 text-warning">
+                    Sorting Algorithms
+                  </h4>
                   <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>Bubble Sort: O(n²)</li>
                     <li>Selection Sort: O(n²)</li>
@@ -1071,9 +1189,11 @@ for test_str in test_strings:
                     <li>Heap Sort: O(n log n)</li>
                   </ul>
                 </div>
-                
+
                 <div>
-                  <h4 className="font-medium mb-2 text-primary">Data Structure Operations</h4>
+                  <h4 className="font-medium mb-2 text-primary">
+                    Data Structure Operations
+                  </h4>
                   <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>Array Access: O(1)</li>
                     <li>Linked List Search: O(n)</li>
