@@ -116,7 +116,7 @@ const Index = () => {
       <div className="min-h-[100svh] md:min-h-screen p-4 sm:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
 
-          {/* HEADER — FIXED */}
+          {/* HEADER */}
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-6 sm:mb-8">
             <div className="flex items-center gap-3">
               <Code className="h-10 w-10 text-primary" />
@@ -131,7 +131,14 @@ const Index = () => {
             </Button>
           </div>
 
-          {/* HERO CARD — FIXED */}
+          {/* ✅ MOBILE NOTICE (NEW) */}
+          <div className="block sm:hidden mb-4 text-center">
+            <p className="text-xs text-muted-foreground">
+              For the best experience, please use <span className="font-medium text-foreground">Desktop view</span>.
+            </p>
+          </div>
+
+          {/* HERO */}
           <div className="glass-card rounded-3xl p-6 sm:p-8 mb-6 sm:mb-8 text-center">
             <h2 className="text-4xl lg:text-5xl font-space font-bold heading-gradient mb-4">
               Welcome to AlgoLearn! 👋
