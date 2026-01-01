@@ -11,6 +11,7 @@ export interface AlgorithmStep {
   type: 'compare' | 'swap' | 'insert' | 'delete' | 'highlight' | 'complete';
   indices?: number[];
   values?: any[];
+  array?: any[]; // ✅ ADD THIS
   description: string;
   theory: string;
   complexity?: string;
@@ -54,35 +55,43 @@ export const AlgorithmVisualizer = ({
 
     const step = steps[stepIndex];
     
-    switch (step.type) {
-      case 'compare':
-        setComparingIndices(step.indices || []);
-        setHighlightedIndices([]);
-        break;
-      case 'swap':
-        if (step.indices && step.indices.length === 2) {
-          const [i, j] = step.indices;
-          const newData = [...currentData];
-          [newData[i], newData[j]] = [newData[j], newData[i]];
-          setCurrentData(newData);
-        }
-        setComparingIndices([]);
-        setHighlightedIndices(step.indices || []);
-        break;
-      case 'highlight':
-        setHighlightedIndices(step.indices || []);
-        setComparingIndices([]);
-        break;
-      case 'insert':
-        setHighlightedIndices(step.indices || []);
-        setComparingIndices([]);
-        break;
-      case 'complete':
-        setHighlightedIndices([]);
-        setComparingIndices([]);
-        break;
-    }
-  }, [steps, currentData]);
+    const executeStep = useCallback((stepIndex: number) => {
+  if (stepIndex >= steps.length) return;
+
+  const step = steps[stepIndex];
+
+  // ✅ Always sync data from algorithm step
+  if (step.array) {
+    setCurrentData(step.array);
+  }
+
+  switch (step.type) {
+    case 'compare':
+      setComparingIndices(step.indices || []);
+      setHighlightedIndices([]);
+      break;
+
+    case 'swap':
+      setComparingIndices([]);
+      setHighlightedIndices(step.indices || []);
+      break;
+
+    case 'highlight':
+      setHighlightedIndices(step.indices || []);
+      setComparingIndices([]);
+      break;
+
+    case 'insert':
+      setHighlightedIndices(step.indices || []);
+      setComparingIndices([]);
+      break;
+
+    case 'complete':
+      setHighlightedIndices([]);
+      setComparingIndices([]);
+      break;
+  }
+}, [steps]);
 
   useEffect(() => {
     if (currentStep < steps.length) {
