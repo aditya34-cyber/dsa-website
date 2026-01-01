@@ -208,60 +208,66 @@ This is a code editor for practice - you can write and save your ${language} cod
   };
 
   return (
-    <div className="space-y-4">
+    <div>
       {/* Project Management Bar */}
-      <div className="glass-card p-4 rounded-xl">
-        <div className="flex flex-wrap gap-4 items-center justify-between">
-          <div className="flex gap-2 items-center">
-            <Button onClick={saveProject} variant="outline" size="sm">
-              <Save className="w-4 h-4 mr-2" />
-              Save Project
-            </Button>
-            
-            <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="cpp">C++</SelectItem>
-                <SelectItem value="c">C</SelectItem>
-                <SelectItem value="python">Python</SelectItem>
-                <SelectItem value="javascript">JavaScript</SelectItem>
-                <SelectItem value="typescript">TypeScript</SelectItem>
-                <SelectItem value="java">Java</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+<div className="glass-card p-4 rounded-xl">
+  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
-          <div className="flex gap-2">
-            <Button 
-              onClick={runCode} 
-              disabled={isRunning}
-              className={`${isRunning ? 'animate-pulse' : ''} bg-success hover:bg-success/90`}
-            >
-              <Play className={`w-4 h-4 mr-2 ${isRunning ? 'animate-spin' : ''}`} />
-              {isRunning ? "Compiling..." : "Run Code"}
-            </Button>
-            
-            {currentProject && (
-              <Button onClick={exportProject} variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-2" />
-                Export
-              </Button>
-            )}
-          </div>
-        </div>
+    {/* Left controls */}
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <Button onClick={saveProject} variant="outline" size="sm" className="w-full sm:w-auto">
+        <Save className="w-4 h-4 mr-2" />
+        Save Project
+      </Button>
 
-        {/* Current Project Info */}
-        {currentProject && (
-          <div className="mt-3 pt-3 border-t border-border/20">
-            <p className="text-sm text-muted-foreground">
-              Current project: <span className="text-foreground font-medium">{currentProject.name}</span>
-              <span className="ml-3">Last modified: {currentProject.lastModified.toLocaleDateString()}</span>
-            </p>
-          </div>
-        )}
-      </div>
+      <Select value={language} onValueChange={setLanguage}>
+        <SelectTrigger className="w-full sm:w-32">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="cpp">C++</SelectItem>
+          <SelectItem value="c">C</SelectItem>
+          <SelectItem value="python">Python</SelectItem>
+          <SelectItem value="javascript">JavaScript</SelectItem>
+          <SelectItem value="typescript">TypeScript</SelectItem>
+          <SelectItem value="java">Java</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+
+    {/* Right controls */}
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <Button
+        onClick={runCode}
+        disabled={isRunning}
+        className={`${isRunning ? "animate-pulse" : ""} bg-success hover:bg-success/90 w-full sm:w-auto`}
+      >
+        <Play className={`w-4 h-4 mr-2 ${isRunning ? "animate-spin" : ""}`} />
+        {isRunning ? "Compiling..." : "Run Code"}
+      </Button>
+
+      {currentProject && (
+        <Button onClick={exportProject} variant="outline" size="sm" className="w-full sm:w-auto">
+          <Download className="w-4 h-4 mr-2" />
+          Export
+        </Button>
+      )}
+    </div>
+  </div>
+
+  {/* Current Project Info */}
+  {currentProject && (
+    <div className="mt-3 pt-3 border-t border-border/20">
+      <p className="text-sm text-muted-foreground">
+        Current project:{" "}
+        <span className="text-foreground font-medium">{currentProject.name}</span>
+        <span className="block sm:inline sm:ml-3">
+          Last modified: {currentProject.lastModified.toLocaleDateString()}
+        </span>
+      </p>
+    </div>
+  )}
+</div>
 
       <div className="grid lg:grid-cols-4 gap-6">
         {/* Projects Sidebar */}
@@ -344,11 +350,12 @@ This is a code editor for practice - you can write and save your ${language} cod
                 <p className="text-muted-foreground italic">Click "Run Code" to see output here...</p>
               )}
             </div>
-          </div>
         </div>
       </div>
     </div>
+    </div>
   );
 };
+
 
 export default CodeEditor;
