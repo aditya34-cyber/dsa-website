@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Play,
   Pause,
-  Square,
   SkipForward,
   RotateCcw,
   ChevronLeft,
@@ -54,7 +53,6 @@ export const AlgorithmVisualizer = ({
   const [highlightedIndices, setHighlightedIndices] = useState<number[]>([]);
   const [comparingIndices, setComparingIndices] = useState<number[]>([]);
 
-  // For stack/queue, sync steps when they change externally
   useEffect(() => {
     setSteps(initialSteps);
     setCurrentStep(0);
@@ -83,9 +81,6 @@ export const AlgorithmVisualizer = ({
           setHighlightedIndices(step.indices || []);
           break;
         case "highlight":
-          setHighlightedIndices(step.indices || []);
-          setComparingIndices([]);
-          break;
         case "insert":
           setHighlightedIndices(step.indices || []);
           setComparingIndices([]);
@@ -100,39 +95,20 @@ export const AlgorithmVisualizer = ({
   );
 
   useEffect(() => {
-    if (currentStep < steps.length) {
-      executeStep(currentStep);
-    }
+    if (currentStep < steps.length) executeStep(currentStep);
   }, [currentStep, executeStep]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isPlaying && currentStep < steps.length) {
       interval = setInterval(() => {
-        setCurrentStep((prev) => {
-          if (prev >= steps.length - 1) {
-            setIsPlaying(false);
-            return prev;
-          }
-          return prev + 1;
-        });
+        setCurrentStep((prev) =>
+          prev >= steps.length - 1 ? prev : prev + 1
+        );
       }, playbackSpeed);
     }
     return () => clearInterval(interval);
   }, [isPlaying, currentStep, steps.length, playbackSpeed]);
-
-  const handlePlay = () => {
-    if (currentStep >= steps.length - 1) {
-      handleRestart();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleStepForward = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep((prev) => prev + 1);
-    }
-  };
 
   const handleRestart = () => {
     setCurrentStep(0);
@@ -142,29 +118,14 @@ export const AlgorithmVisualizer = ({
     setComparingIndices([]);
   };
 
-  const handleGenerateNewData = () => {
-    const newData =
-      algorithmType === "sorting"
-        ? Array.from({ length: 8 }, () => Math.floor(Math.random() * 100) + 1)
-        : initialData;
-
-    const newSteps = onGenerateSteps(newData);
-    setSteps(newSteps);
-    setCurrentData(newData);
-    setCurrentStep(0);
-    setIsPlaying(false);
-    setHighlightedIndices([]);
-    setComparingIndices([]);
-  };
-
   const currentStepData = steps[currentStep];
   const progress = ((currentStep + 1) / steps.length) * 100;
 
   return (
-    <div className="min-h-screen p-6 lg:p-8">
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex flex-wrap items-center gap-4 mb-8">
           <Button
             variant="ghost"
             size="sm"
@@ -174,143 +135,108 @@ export const AlgorithmVisualizer = ({
             <ChevronLeft className="h-4 w-4" />
             Back to Dashboard
           </Button>
-          <h1 className="text-3xl font-space font-bold heading-gradient">
+          <h1 className="text-2xl sm:text-3xl font-space font-bold heading-gradient">
             {title}
           </h1>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Visualization Area */}
           <div className="lg:col-span-2 space-y-6">
             {/* Controls */}
             <Card className="glass-card bg-card/80 border-border/20">
               <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <CardTitle className="text-lg font-space">
                     Algorithm Controls
                   </CardTitle>
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      variant="outline"
-                      className="bg-primary/10 text-primary border-primary/20"
-                    >
-                      Step {currentStep + 1} of {steps.length}
-                    </Badge>
-                  </div>
+                  <Badge
+                    variant="outline"
+                    className="bg-primary/10 text-primary border-primary/20"
+                  >
+                    Step {currentStep + 1} of {steps.length}
+                  </Badge>
                 </div>
                 <Progress value={progress} className="w-full h-2" />
               </CardHeader>
+
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <Button
-                    onClick={handlePlay}
-                    disabled={currentStep >= steps.length}
-                    className="flex items-center gap-2"
-                  >
-                    {isPlaying ? (
-                      <Pause className="h-4 w-4" />
-                    ) : (
-                      <Play className="h-4 w-4" />
-                    )}
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button onClick={() => setIsPlaying(!isPlaying)}>
+                    {isPlaying ? <Pause /> : <Play />}
                     {isPlaying ? "Pause" : "Play"}
                   </Button>
 
                   <Button
                     variant="outline"
-                    onClick={handleStepForward}
+                    onClick={() => setCurrentStep((p) => p + 1)}
                     disabled={currentStep >= steps.length - 1}
-                    className="flex items-center gap-2"
                   >
-                    <SkipForward className="h-4 w-4" />
+                    <SkipForward />
                     Step
                   </Button>
 
-                  <Button
-                    variant="outline"
-                    onClick={handleRestart}
-                    className="flex items-center gap-2"
-                  >
-                    <RotateCcw className="h-4 w-4" />
+                  <Button variant="outline" onClick={handleRestart}>
+                    <RotateCcw />
                     Restart
                   </Button>
 
                   <Button
                     variant="secondary"
-                    onClick={handleGenerateNewData}
-                    className="flex items-center gap-2 ml-auto"
+                    className="sm:ml-auto"
+                    onClick={() => {
+                      const newData =
+                        algorithmType === "sorting"
+                          ? Array.from({ length: 8 }, () =>
+                              Math.floor(Math.random() * 100) + 1
+                            )
+                          : initialData;
+                      setSteps(onGenerateSteps(newData));
+                      setCurrentData(newData);
+                      setCurrentStep(0);
+                    }}
                   >
                     Generate New Data
                   </Button>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <label className="text-sm font-medium">Speed:</label>
-                  <div className="flex gap-2">
-                    {[2000, 1000, 500, 250].map((speed) => (
-                      <Button
-                        key={speed}
-                        variant={
-                          playbackSpeed === speed ? "default" : "outline"
-                        }
-                        size="sm"
-                        onClick={() => setPlaybackSpeed(speed)}
-                        className="h-8 px-3 text-xs"
-                      >
-                        {speed === 2000
-                          ? "0.5x"
-                          : speed === 1000
-                          ? "1x"
-                          : speed === 500
-                          ? "2x"
-                          : "4x"}
-                      </Button>
-                    ))}
-                  </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-sm">Speed:</span>
+                  {[2000, 1000, 500, 250].map((speed) => (
+                    <Button
+                      key={speed}
+                      size="sm"
+                      variant={playbackSpeed === speed ? "default" : "outline"}
+                      onClick={() => setPlaybackSpeed(speed)}
+                    >
+                      {speed === 2000
+                        ? "0.5x"
+                        : speed === 1000
+                        ? "1x"
+                        : speed === 500
+                        ? "2x"
+                        : "4x"}
+                    </Button>
+                  ))}
                 </div>
               </CardContent>
             </Card>
 
             {/* Visualization */}
             <Card className="glass-card bg-card/80 border-border/20">
-              <CardContent className="p-8">
+              <CardContent className="p-4 sm:p-6 md:p-8">
                 <div
                   className={`flex ${
                     algorithmType === "stack" || algorithmType === "queue"
                       ? "flex-col-reverse items-center"
                       : "items-end justify-center"
-                  } gap-2 min-h-[300px]`}
+                  } gap-2 min-h-[250px] sm:min-h-[300px]`}
                 >
                   <AnimatePresence>
-                    {/* For stack/queue, use values from current step; otherwise use currentData */}
                     {(algorithmType === "stack" || algorithmType === "queue"
                       ? currentStepData?.values || []
                       : currentData
                     ).map((value, index) => (
-                      <motion.div
-                        key={`${algorithmType}-${index}-${value}`}
-                        layout
-                        initial={{
-                          opacity: 0,
-                          scale: 0.8,
-                          y: algorithmType === "stack" ? -20 : 0,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          scale: 1,
-                          y: 0,
-                        }}
-                        exit={{
-                          opacity: 0,
-                          scale: 0.8,
-                          y: algorithmType === "stack" ? -20 : 0,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 30,
-                        }}
-                        className="relative"
-                      >
+                      <motion.div key={index}>
                         {renderElement(
                           value,
                           index,
@@ -320,110 +246,29 @@ export const AlgorithmVisualizer = ({
                       </motion.div>
                     ))}
                   </AnimatePresence>
-                  {(algorithmType === "stack" || algorithmType === "queue") &&
-                    (!currentStepData?.values ||
-                      currentStepData.values.length === 0) && (
-                      <p className="text-muted-foreground text-sm">
-                        Stack is empty. Add operations and play to visualize.
-                      </p>
-                    )}
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Enhanced Theory Panel */}
+          {/* Guide */}
           <div className="space-y-6">
             <Card className="glass-card bg-card/90 border-border/30">
-              <CardHeader className="pb-4">
-                <CardTitle className="font-space text-xl">
+              <CardHeader>
+                <CardTitle className="text-xl font-space">
                   Algorithm Guide
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {currentStepData && (
                   <>
-                    {/* Current Step */}
-                    <div className="p-6 rounded-lg bg-accent/20 border border-accent/30">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-3 h-3 rounded-full bg-accent animate-pulse"></div>
-                        <p className="font-semibold text-accent-foreground text-lg">
-                          Current Step
-                        </p>
-                      </div>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {currentStepData.description}
-                      </p>
-                    </div>
-
-                    {/* Theory Explanation */}
-                    <div className="p-6 rounded-lg bg-primary/20 border border-primary/30">
-                      <p className="font-semibold text-primary mb-4 text-lg flex items-center gap-2">
-                        💡 How it Works
-                      </p>
-                      <p className="text-muted-foreground leading-relaxed text-base">
-                        {currentStepData.theory}
-                      </p>
-                    </div>
-
-                    {/* Complexity Information */}
+                    <p>{currentStepData.description}</p>
+                    <p>{currentStepData.theory}</p>
                     {currentStepData.complexity && (
-                      <div className="p-6 rounded-lg bg-secondary/20 border border-secondary/30">
-                        <p className="font-semibold text-secondary-foreground mb-4 text-lg flex items-center gap-2">
-                          ⚡ Performance
-                        </p>
-                        <p className="text-muted-foreground leading-relaxed text-base">
-                          {currentStepData.complexity}
-                        </p>
-                      </div>
+                      <p>{currentStepData.complexity}</p>
                     )}
-
-                    {/* Algorithm Analogy */}
-                    <div className="p-6 rounded-lg bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20">
-                      <p className="font-semibold text-foreground mb-4 text-lg flex items-center gap-2">
-                        🎯 Real-World Analogy
-                      </p>
-                      <p className="text-muted-foreground leading-relaxed text-base">
-                        {algorithmType === "sorting" &&
-                          "Think of sorting like organizing books on a shelf — you compare and rearrange books until they are in order."}
-
-                        {algorithmType === "searching" &&
-                          "Searching is like finding a word in a dictionary — you open the middle, decide which half to keep, and repeat."}
-
-                        {algorithmType === "stack" &&
-                          "A stack works like a pile of plates — you add and remove plates only from the top (Last In, First Out)."}
-
-                        {algorithmType === "queue" &&
-                          "A queue works like a line at a ticket counter — the first person to enter is served first (First In, First Out)."}
-                      </p>
-                    </div>
                   </>
                 )}
-              </CardContent>
-            </Card>
-
-            {/* Algorithm Info */}
-            <Card className="glass-card bg-card/80 border-border/20">
-              <CardHeader>
-                <CardTitle className="font-space text-lg">
-                  Algorithm Info
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="text-sm space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-destructive"></div>
-                    <span>Comparing elements</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-primary"></div>
-                    <span>Active/Modified elements</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-muted"></div>
-                    <span>Default elements</span>
-                  </div>
-                </div>
               </CardContent>
             </Card>
           </div>
