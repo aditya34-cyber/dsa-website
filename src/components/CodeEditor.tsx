@@ -214,7 +214,7 @@ This is a code editor for practice - you can write and save your ${language} cod
   <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
     {/* Left controls */}
-    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
       <Button onClick={saveProject} variant="outline" size="sm" className="w-full sm:w-auto">
         <Save className="w-4 h-4 mr-2" />
         Save Project
@@ -236,7 +236,7 @@ This is a code editor for practice - you can write and save your ${language} cod
     </div>
 
     {/* Right controls */}
-    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
       <Button
         onClick={runCode}
         disabled={isRunning}
