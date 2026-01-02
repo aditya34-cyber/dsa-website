@@ -11,7 +11,6 @@ export interface AlgorithmStep {
   type: 'compare' | 'swap' | 'insert' | 'delete' | 'highlight' | 'complete';
   indices?: number[];
   values?: any[];
-  array?: any[]; // ✅ ADD THIS
   description: string;
   theory: string;
   complexity?: string;
@@ -35,7 +34,9 @@ export const AlgorithmVisualizer = ({
   algorithmType
 }: AlgorithmVisualizerProps) => {
   const navigate = useNavigate();
-  const [currentData, setCurrentData] = useState(initialData);
+  const [currentData, setCurrentData] = useState(() => 
+    initialData.map((value, index) => ({ value, id: index }))
+  );
   const [steps, setSteps] = useState<AlgorithmStep[]>(initialSteps);
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -55,43 +56,37 @@ export const AlgorithmVisualizer = ({
 
     const step = steps[stepIndex];
     
-    const executeStep = useCallback((stepIndex: number) => {
-  if (stepIndex >= steps.length) return;
-
-  const step = steps[stepIndex];
-
-  // ✅ Always sync data from algorithm step
-  if (step.array) {
-    setCurrentData(step.array);
-  }
-
-  switch (step.type) {
-    case 'compare':
-      setComparingIndices(step.indices || []);
-      setHighlightedIndices([]);
-      break;
-
-    case 'swap':
-      setComparingIndices([]);
-      setHighlightedIndices(step.indices || []);
-      break;
-
-    case 'highlight':
-      setHighlightedIndices(step.indices || []);
-      setComparingIndices([]);
-      break;
-
-    case 'insert':
-      setHighlightedIndices(step.indices || []);
-      setComparingIndices([]);
-      break;
-
-    case 'complete':
-      setHighlightedIndices([]);
-      setComparingIndices([]);
-      break;
-  }
-}, [steps]);
+    switch (step.type) {
+      case 'compare':
+        setComparingIndices(step.indices || []);
+        setHighlightedIndices([]);
+        break;
+      case 'swap':
+        if (step.indices && step.indices.length === 2) {
+          const [i, j] = step.indices;
+          setCurrentData(prevData => {
+            const newData = [...prevData];
+            [newData[i], newData[j]] = [newData[j], newData[i]];
+            return newData;
+          });
+        }
+        setComparingIndices([]);
+        setHighlightedIndices(step.indices || []);
+        break;
+      case 'highlight':
+        setHighlightedIndices(step.indices || []);
+        setComparingIndices([]);
+        break;
+      case 'insert':
+        setHighlightedIndices(step.indices || []);
+        setComparingIndices([]);
+        break;
+      case 'complete':
+        setHighlightedIndices([]);
+        setComparingIndices([]);
+        break;
+    }
+  }, [steps]);
 
   useEffect(() => {
     if (currentStep < steps.length) {
@@ -130,20 +125,20 @@ export const AlgorithmVisualizer = ({
 
   const handleRestart = () => {
     setCurrentStep(0);
-    setCurrentData(initialData);
+    setCurrentData(initialData.map((value, index) => ({ value, id: index })));
     setIsPlaying(false);
     setHighlightedIndices([]);
     setComparingIndices([]);
   };
 
   const handleGenerateNewData = () => {
-    const newData = algorithmType === 'sorting' ? 
+    const newValues = algorithmType === 'sorting' ? 
       Array.from({ length: 8 }, () => Math.floor(Math.random() * 100) + 1) :
       initialData;
     
-    const newSteps = onGenerateSteps(newData);
+    const newSteps = onGenerateSteps(newValues);
     setSteps(newSteps);
-    setCurrentData(newData);
+    setCurrentData(newValues.map((value, index) => ({ value, id: index })));
     setCurrentStep(0);
     setIsPlaying(false);
     setHighlightedIndices([]);
@@ -251,11 +246,11 @@ export const AlgorithmVisualizer = ({
                   <AnimatePresence>
                     {/* For stack/queue, use values from current step; otherwise use currentData */}
                     {(algorithmType === 'stack' || algorithmType === 'queue' 
-                      ? (currentStepData?.values || []) 
+                      ? (currentStepData?.values || []).map((v, i) => ({ value: v, id: i }))
                       : currentData
-                    ).map((value, index) => (
+                    ).map((item, index) => (
                       <motion.div
-                        key={`${algorithmType}-${index}-${value}`}
+                        key={`${algorithmType}-${item.id}`}
                         layout
                         initial={{ opacity: 0, scale: 0.8, y: algorithmType === 'stack' ? -20 : 0 }}
                         animate={{ 
@@ -271,7 +266,7 @@ export const AlgorithmVisualizer = ({
                         }}
                         className="relative"
                       >
-                        {renderElement(value, index, highlightedIndices.includes(index), comparingIndices.includes(index))}
+                        {renderElement(item.value, index, highlightedIndices.includes(index), comparingIndices.includes(index))}
                       </motion.div>
                     ))}
                   </AnimatePresence>
