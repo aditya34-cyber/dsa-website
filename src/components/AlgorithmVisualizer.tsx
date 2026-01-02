@@ -216,7 +216,8 @@ export const AlgorithmVisualizer = ({
                     onClick={handleGenerateNewData}
                     className="flex items-center gap-2 ml-auto"
                   >
-                    Generate New Data/Apply Your Values
+                    Generate New Data/
+                    Apply Your Values
                   </Button>
                 </div>
 
