@@ -2,12 +2,11 @@ import { useState } from "react";
 import { AlgorithmVisualizer } from "@/components/AlgorithmVisualizer";
 import { generateBubbleSortSteps } from "@/algorithms/bubbleSort";
 import { generateQuickSortSteps } from "@/algorithms/quickSort";
-import { generateSelectionSortSteps } from "@/algorithms/selectionSort";
-import { generateMergeSortSteps } from "@/algorithms/mergeSort";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const SortingVisualization = () => {
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState<'bubble' | 'quick' | 'selection' | 'merge'>('bubble');
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState<'bubble' | 'quick'>('bubble');
   const [currentData] = useState(() => 
     Array.from({ length: 8 }, () => Math.floor(Math.random() * 100) + 1)
   );
@@ -16,22 +15,12 @@ const SortingVisualization = () => {
     bubble: {
       title: "Bubble Sort Visualization",
       generateSteps: generateBubbleSortSteps,
-      description: "Repeatedly compares adjacent elements and swaps them if in wrong order. O(n²)"
+      description: "Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order."
     },
     quick: {
       title: "Quick Sort Visualization", 
       generateSteps: generateQuickSortSteps,
-      description: "Divides array around a pivot, recursively sorting partitions. O(n log n)"
-    },
-    selection: {
-      title: "Selection Sort Visualization",
-      generateSteps: generateSelectionSortSteps,
-      description: "Finds minimum element and places it at the beginning, repeating for unsorted portion. O(n²)"
-    },
-    merge: {
-      title: "Merge Sort Visualization",
-      generateSteps: generateMergeSortSteps,
-      description: "Divides array into halves, recursively sorts, then merges sorted halves. O(n log n)"
+      description: "Quick Sort is a highly efficient sorting algorithm that uses divide-and-conquer to sort arrays by partitioning elements around a pivot."
     }
   };
 
@@ -66,28 +55,14 @@ const SortingVisualization = () => {
             variant={selectedAlgorithm === 'bubble' ? 'default' : 'outline'}
             onClick={() => setSelectedAlgorithm('bubble')}
           >
-            Bubble
-          </Button>
-          <Button
-            size="sm"
-            variant={selectedAlgorithm === 'selection' ? 'default' : 'outline'}
-            onClick={() => setSelectedAlgorithm('selection')}
-          >
-            Selection
+            Bubble Sort
           </Button>
           <Button
             size="sm"
             variant={selectedAlgorithm === 'quick' ? 'default' : 'outline'}
             onClick={() => setSelectedAlgorithm('quick')}
           >
-            Quick
-          </Button>
-          <Button
-            size="sm"
-            variant={selectedAlgorithm === 'merge' ? 'default' : 'outline'}
-            onClick={() => setSelectedAlgorithm('merge')}
-          >
-            Merge
+            Quick Sort
           </Button>
           <span className="text-xs text-muted-foreground ml-2 max-w-md">{currentAlg.description}</span>
         </div>
