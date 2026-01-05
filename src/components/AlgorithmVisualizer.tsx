@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 
 export interface AlgorithmStep {
-  type: 'compare' | 'swap' | 'insert' | 'delete' | 'highlight' | 'complete';
+  type: 'start' | 'compare' | 'swap' | 'insert' | 'delete' | 'highlight' | 'complete';
   indices?: number[];
   values?: any[];
   description: string;
@@ -216,8 +216,7 @@ export const AlgorithmVisualizer = ({
                     onClick={handleGenerateNewData}
                     className="flex items-center gap-2 ml-auto"
                   >
-                    Generate New Data/
-                    Apply Your Values
+                    Generate New Data
                   </Button>
                 </div>
 
